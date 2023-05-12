@@ -37,47 +37,73 @@ setActuators([H|_], Y) :-
 	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
 
 setActuators(_, _).
-    
 
-%extractActuators(List, NewList, variable).
-extractInsideActuators([H|T], L,X) :-
+%setActuators(Actuators, Value).
+setActuators([H|T], Y) :-
     T \== [],
     !,
-    extractActuators(T, [H|L], X).
+    setActuators(T, Y),
+	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
 
+setActuators([H|_], Y) :-
+    !,
+	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
+
+setActuators(_, _).
+    
+
+%extractInsideActuators(List, NewList, variable).
+extractInsideActuators([H|T], L,X) :-
+    T \== [],
+    inside(H),
+    !,
+    extractInsideActuators(T, [H|L], X).
+
+extractInsideActuators([H|T], L, X) :-
+    T\== [],
+    \+ inside(H),
+    !,
+    extractInsideActuators(T, L, X).
+
+extractInsideActuators([H|_], L,X) :-
+    \+ inside(H),
+    !,
+    X = L.
 
 extractInsideActuators([H|_], L, X) :-
+    inside(H),
+    !,
     X = [H|L].
 
 extractInsideActuators(_, L, X) :-
     X = L.
  
 
-# %extractOutsideActuators(List, NewList, variable).
-# extractOutsideActuators([H|T], L,X) :-
-#     T \== [],
-#     outside(H),
-#     !,
-#     extractOutsideActuators(T, [H|L], X).
+%extractOutsideActuators(List, NewList, variable).
+extractOutsideActuators([H|T], L,X) :-
+    T \== [],
+    outside(H),
+    !,
+    extractOutsideActuators(T, [H|L], X).
 
-# extractOutsideActuators([H|T], L, X) :-
-#     T\== [],
-#     \+ outside(H),
-#     !,
-#     extractOutsideActuators(T, L, X).
+extractOutsideActuators([H|T], L, X) :-
+    T\== [],
+    \+ outside(H),
+    !,
+    extractOutsideActuators(T, L, X).
 
-# extractOutsideActuators([H|_], L,X) :-
-#     \+ outside(H),
-#     !,
-#     X = L.
+extractOutsideActuators([H|_], L,X) :-
+    \+ outside(H),
+    !,
+    X = L.
 
-# extractOutsideActuators([H|_], L, X) :-
-#     outside(H),
-#     !,
-#     X = [H|L].
+extractOutsideActuators([H|_], L, X) :-
+    outside(H),
+    !,
+    X = [H|L].
 
-# extractOutsideActuators(_, L, X) :-
-#     X = L.
+extractOutsideActuators(_, L, X) :-
+    X = L.
 
 %set(PIId).
 set(PIId) :-  set(PIId, _).
@@ -98,7 +124,7 @@ set(PIId, light) :-
     sensorValue(SensorId_outside, X),
     preferencesInstance(PIId, light, Y, Actuators),
     X < Y,
-	setOutsideActuators(Actuators, 0),
+	setOutsideActuators(Actuators, 0), 
 	setInsideActuators(Actuators, Y).
 
 

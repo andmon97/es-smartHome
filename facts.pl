@@ -6,8 +6,8 @@ propertyType(wind).
 
 %sensor(SensorId, TypeId).
 :-dynamic(sensor/2).
-sensor(brightness, light).
 sensor(brightness_outside, light).
+sensor(brightness, light).
 sensor(temperature, temp).
 sensor(temperature_outside, temp).
 sensor(outside_noise, noise).
@@ -17,7 +17,7 @@ sensor(outside_wind, wind).
 %sensorValue(SensorId, Value).
 :-dynamic(sensorValue/2).
 sensorValue(brightness, 0).
-sensorValue(brightness_outside, 0).
+sensorValue(brightness_outside, 10).
 sensorValue(temperature, 10).
 sensorValue(temperature_outside, 8).
 sensorValue(outside_noise, 20).
@@ -44,15 +44,15 @@ actuator(r, temp). /* radiator */
 
 
 %inside(Id).
-% :-dynamic(inside/1).
-% inside(brightness).
-% inside(temperature).
-% inside(l1).
-% inside(l2).
-% inside(l3).
-% inside(l4).
-% inside(ac).
-% inside(r).
+:-dynamic(inside/1).
+inside(brightness).
+inside(temperature).
+inside(l1).
+inside(l2).
+inside(l3).
+inside(l4).
+inside(ac).
+inside(r).
 
 
 %actuatorValue(ActuatorId, Value).
@@ -72,7 +72,7 @@ actuatorValue(ac, 0). /* air conditioner */
 %preferencesInstance(PiiD, TypeId, ExpectedValueSensor, Actuators).
 :-dynamic(preferencesInstance/4).
 preferencesInstance(nullPreference, _, 0, []).
-preferencesInstance(study, light, 10, [l1, l3, l4, l2]). /* if study only desk light */
+preferencesInstance(study, light, 10, [l2, rs1, rs2]). /* if study only desk light */
 preferencesInstance(study, temp, 20, [ac, r, w1, w2]).
 preferencesInstance(study, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(study, noise, 0, [ac, w1, w2]).
@@ -85,11 +85,11 @@ preferencesInstance(sleep, noise, 2, [ac, w1, w2]).
 preferencesInstance(turn_off, TypeId, 0, Actuators) :- setof(X, actuator(X,TypeId),Actuators).
 preferencesInstance(turn_on, TypeId, 10, Actuators) :- setof(X, actuator(X,TypeId),Actuators).
 
-preferencesInstance(movie, light, 5, [l1, l2, l3,l4, rs1, rs2]). /* if movie only bedside lights */
+preferencesInstance(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
 preferencesInstance(movie, temp, 25, [r, w1, w2, ac]).
 preferencesInstance(movie, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(movie, noise, 5, [ac, w1, w2]).
 
-preferencesInstance(clean, light, 10, [l1, l2, l3, l4, rs1, rs2]). /* if clean only roller s*/
+preferencesInstance(clean, light, 10, [rs1, rs2]). /* if clean only roller s*/
 preferencesInstance(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
 preferencesInstance(clean, wind, 5, [w1,w2]). /* open windows for wind*/
