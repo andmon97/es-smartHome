@@ -77,11 +77,13 @@ preferencesInstance(study, light, 10, [l2, rs1, rs2]). /* if study only desk lig
 preferencesInstance(study, light, 0, [l1, l3, l4]).  /* turn off the rest */
 preferencesInstance(study, temp, 20, [ac]).
 preferencesInstance(study, temp, 0, [r, w1, w2]). /* turn off the rasdator and windows */
+preferencesInstance(study, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(study, noise, 0, [w1, w2]).
 
 preferencesInstance(sleep, light, 0, [l1, l2, l3, l4, rs1, rs2]). /* turn off all lights and roller shutters */
 preferencesInstance(sleep, temp, 25, [ac]).
 preferencesInstance(sleep, temp, 0, [r, w1, w2]). /* turn off the rasdator and windows */
+preferencesInstance(sleep, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(sleep, noise, 2, [ac, w1, w2]).
 
 preferencesInstance(turn_off, TypeId, 0, Actuators) :- setof(X, actuator(X,TypeId),Actuators).
@@ -91,8 +93,11 @@ preferencesInstance(movie, light, 5, [l3,l4]). /* if movie only bedside lights *
 preferencesInstance(movie, light, 0, [l1, l2, rs1, rs2]). /* turn off the rest */
 preferencesInstance(movie, temp, 25, [ac]).
 preferencesInstance(movie, temp, 0, [r, w1, w2]). /* turn off the rasdator and windows */
+preferencesInstance(movie, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(movie, noise, 5, [ac, w1, w2]).
 
 preferencesInstance(clean, light, 10, [rs1, rs2]). /* if clean only roller s*/
 preferencesInstance(clean, light, 0, [l1, l2, l3, l4]). /* turn off the rest */
 preferencesInstance(clean, temp, 20, [w1,w2]). /* open windows */
+preferencesInstance(clean, temp, 0, [r, ac]). /* turn off the rasdator and air conditioner */
+preferencesInstance(clean, wind, 5, [w1,w2]). /* open windows for wind*/
