@@ -26,22 +26,22 @@ sensorValue(outside_wind, 0).
 sensor(outside_noise, 0).
 
 
-%actuator(ActuatorId, TypeId).
-:-dynamic(actuator/2).
-actuator(X, noise) :-
-    actuator(X, temp).
-actuator(l1, light). /* main light */
-actuator(l2, light). /* desk light */
-actuator(l3, light). /* bedside (left) light */
-actuator(l4, light). /* bedside (right) light */
-actuator(ac, temp).  /* air conditioner */
-actuator(w1, temp). /* window 1 */
-actuator(w1, wind).
-actuator(rs1, light). /* roller shutter 1*/
-actuator(w2, temp). /* window 2 */
-actuator(w2, wind).
-actuator(rs2, light). /* roller shutter 2*/
-actuator(r, temp). /* radiator */
+%effector(EffectorId, TypeId).
+:-dynamic(effector/2).
+effector(X, noise) :-
+    effector(X, temp).
+effector(l1, light). /* main light */
+effector(l2, light). /* desk light */
+effector(l3, light). /* bedside (left) light */
+effector(l4, light). /* bedside (right) light */
+effector(ac, temp).  /* air conditioner */
+effector(w1, temp). /* window 1 */
+effector(w1, wind).
+effector(rs1, light). /* roller shutter 1*/
+effector(w2, temp). /* window 2 */
+effector(w2, wind).
+effector(rs2, light). /* roller shutter 2*/
+effector(r, temp). /* radiator */
 
 
 
@@ -57,21 +57,21 @@ inside(ac).
 inside(r).
 
 
-%actuatorValue(ActuatorId, Value).
-:-dynamic(actuatorValue/2).
-actuatorValue(l1, 0). /* main light */
-actuatorValue(l2, 0). /* desk light */
-actuatorValue(l3, 0). /* bedside (left) light */
-actuatorValue(l4, 0). /* bedside (right) light */
-actuatorValue(w1, 0).  /* window 1 */
-actuatorValue(w2, 0).  /* window 2 */
-actuatorValue(rs1, 0). /* roller shutter 1*/
-actuatorValue(rs2, 0). /* roller shutter 2*/
-actuatorValue(r, 0). /* radiator */
-actuatorValue(ac, 0). /* air conditioner */
+%effectorValue(EffectorId, Value).
+:-dynamic(effectorValue/2).
+effectorValue(l1, 0). /* main light */
+effectorValue(l2, 0). /* desk light */
+effectorValue(l3, 0). /* bedside (left) light */
+effectorValue(l4, 0). /* bedside (right) light */
+effectorValue(w1, 0).  /* window 1 */
+effectorValue(w2, 0).  /* window 2 */
+effectorValue(rs1, 0). /* roller shutter 1*/
+effectorValue(rs2, 0). /* roller shutter 2*/
+effectorValue(r, 0). /* radiator */
+effectorValue(ac, 0). /* air conditioner */
 
 
-%preferencesInstance(PiiD, TypeId, ExpectedValueSensor, Actuators).
+%preferencesInstance(PiiD, TypeId, ExpectedValueSensor, Effectors).
 :-dynamic(preferencesInstance/4).
 preferencesInstance(nullPreference, _, 0, []).
 preferencesInstance(study, light, 10, [l2, rs1]). /* if study only desk light */
@@ -84,8 +84,8 @@ preferencesInstance(sleep, temp, 25, [ac, r, w1, w2]).
 preferencesInstance(sleep, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(sleep, noise, 2, [ac, w1, w2]).
 
-preferencesInstance(turn_off, TypeId, 0, Actuators) :- setof(X, actuator(X,TypeId),Actuators).
-preferencesInstance(turn_on, TypeId, 10, Actuators) :- setof(X, actuator(X,TypeId),Actuators).
+preferencesInstance(turn_off, TypeId, 0, Effectors) :- setof(X, effector(X,TypeId),Effectors).
+preferencesInstance(turn_on, TypeId, 10, Effectors) :- setof(X, effector(X,TypeId),Effectors).
 
 preferencesInstance(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
 preferencesInstance(movie, temp, 25, [r, w1, w2, ac]).
@@ -95,3 +95,8 @@ preferencesInstance(movie, noise, 5, [ac, w1, w2]).
 preferencesInstance(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/
 preferencesInstance(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
 preferencesInstance(clean, wind, 5, [w1,w2]). /* open windows for wind*/
+
+preferencesInstance(music, light, 5, [l1, l2, l3, l4, rs1, rs2]). /* if study only desk light */
+preferencesInstance(music, temp, 20, [ac, r, w1, w2]).
+preferencesInstance(music, wind, 0, [w1,w2]). /* close windows for wind*/
+preferencesInstance(music, noise, 0, [ac, w1, w2]).

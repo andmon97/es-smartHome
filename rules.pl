@@ -15,94 +15,94 @@ outside(Id) :-
 	\+ inside(Id).
 
 
-%setInsideActuators(Actuators, Value).
-setInsideActuators([H|T], Y) :-
-    extractInsideActuators([H|T], [], L),
-    setActuators(L, Y).
+%setInsideEffectors(Effectors, Value).
+setInsideEffectors([H|T], Y) :-
+    extractInsideEffectors([H|T], [], L),
+    setEffectors(L, Y).
 
-%setOutsideActuators(Actuators, Value).
-setOutsideActuators([H|T], Y) :-
-    extractOutsideActuators([H|T], [], L),
-    setActuators(L, Y).
+%setOutsideEffectors(Effectors, Value).
+setOutsideEffectors([H|T], Y) :-
+    extractOutsideEffectors([H|T], [], L),
+    setEffectors(L, Y).
 
-%setActuators(Actuators, Value).
-setActuators([H|T], Y) :-
+%setEffectors(Effectors, Value).
+setEffectors([H|T], Y) :-
     T \== [],
     !,
-    setActuators(T, Y),
+    setEffectors(T, Y),
 	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
 
-setActuators([H|_], Y) :-
+setEffectors([H|_], Y) :-
     !,
 	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
 
-setActuators(_, _).
+setEffectors(_, _).
 
-%setActuators(Actuators, Value).
-setActuators([H|T], Y) :-
+%setEffectors(Effectors, Value).
+setEffectors([H|T], Y) :-
     T \== [],
     !,
-    setActuators(T, Y),
+    setEffectors(T, Y),
 	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
 
-setActuators([H|_], Y) :-
+setEffectors([H|_], Y) :-
     !,
 	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
 
-setActuators(_, _).
+setEffectors(_, _).
     
 
-%extractInsideActuators(List, NewList, variable).
-extractInsideActuators([H|T], L,X) :-
+%extractInsideEffectors(List, NewList, variable).
+extractInsideEffectors([H|T], L,X) :-
     T \== [],
     inside(H),
     !,
-    extractInsideActuators(T, [H|L], X).
+    extractInsideEffectors(T, [H|L], X).
 
-extractInsideActuators([H|T], L, X) :-
+extractInsideEffectors([H|T], L, X) :-
     T\== [],
     \+ inside(H),
     !,
-    extractInsideActuators(T, L, X).
+    extractInsideEffectors(T, L, X).
 
-extractInsideActuators([H|_], L,X) :-
+extractInsideEffectors([H|_], L,X) :-
     \+ inside(H),
     !,
     X = L.
 
-extractInsideActuators([H|_], L, X) :-
+extractInsideEffectors([H|_], L, X) :-
     inside(H),
     !,
     X = [H|L].
 
-extractInsideActuators(_, L, X) :-
+extractInsideEffectors(_, L, X) :-
     X = L.
  
 
-%extractOutsideActuators(List, NewList, variable).
-extractOutsideActuators([H|T], L,X) :-
+%extractOutsideEffectors(List, NewList, variable).
+extractOutsideEffectors([H|T], L,X) :-
     T \== [],
     outside(H),
     !,
-    extractOutsideActuators(T, [H|L], X).
+    extractOutsideEffectors(T, [H|L], X).
 
-extractOutsideActuators([H|T], L, X) :-
+extractOutsideEffectors([H|T], L, X) :-
     T\== [],
     \+ outside(H),
     !,
-    extractOutsideActuators(T, L, X).
+    extractOutsideEffectors(T, L, X).
 
-extractOutsideActuators([H|_], L,X) :-
+extractOutsideEffectors([H|_], L,X) :-
     \+ outside(H),
     !,
     X = L.
 
-extractOutsideActuators([H|_], L, X) :-
+extractOutsideEffectors([H|_], L, X) :-
     outside(H),
     !,
     X = [H|L].
 
-extractOutsideActuators(_, L, X) :-
+extractOutsideEffectors(_, L, X) :-
     X = L.
 
 %set(PIId).
@@ -113,23 +113,23 @@ set(PIId, light) :-
     sensor(SensorId_outside, light),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X),
-    preferencesInstance(PIId, light, Y, Actuators),
+    preferencesInstance(PIId, light, Y, Effectors),
     X >= Y,
-	setOutsideActuators(Actuators, Y),
-	setInsideActuators(Actuators, 0).
+	setOutsideEffectors(Effectors, Y),
+	setInsideEffectors(Effectors, 0).
     
 set(PIId, light) :- 
     sensor(SensorId_outside, light),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X),
-    preferencesInstance(PIId, light, Y, Actuators),
+    preferencesInstance(PIId, light, Y, Effectors),
     X < Y,
-	setOutsideActuators(Actuators, 0), 
-	setInsideActuators(Actuators, Y).
+	setOutsideEffectors(Effectors, 0), 
+	setInsideEffectors(Effectors, Y).
 
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y_temp, Actuators),
+    preferencesInstance(PIId, temp, Y_temp, Effectors),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
@@ -142,13 +142,13 @@ set(PIId, temp) :-
     sensor(SensorId_outside, wind),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    preferencesInstance(PIId, wind, Y_wind, Effectors),
     X_wind <= Y_wind,
-	setOutsideActuators(Actuators, 1),
-	setInsideActuators(Actuators, 0).
+	setOutsideEffectors(Effectors, 1),
+	setInsideEffectors(Effectors, 0).
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y_temp, Actuators),
+    preferencesInstance(PIId, temp, Y_temp, Effectors),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
@@ -161,13 +161,13 @@ set(PIId, temp) :-
     sensor(SensorId_outside, wind),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    preferencesInstance(PIId, wind, Y_wind, Effectors),
     X_wind > Y_wind,
-	setOutsideActuators(Actuators, 0),
-	setInsideActuators(Actuators, Y_temp).
+	setOutsideEffectors(Effectors, 0),
+	setInsideEffectors(Effectors, Y_temp).
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Actuators),
+    preferencesInstance(PIId, temp, Y, Effectors),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
@@ -176,22 +176,22 @@ set(PIId, temp) :-
     sensorValue(SensorId_inside, X_inside),
     X_inside < Y,
     X_outside < Y,
-	setOutsideActuators(Actuators, 0),
-	setInsideActuators_temp(X_inside, X_outside, Y).
+	setOutsideEffectors(Effectors, 0),
+	setInsideEffectors_temp(X_inside, X_outside, Y).
 
-setInsideActuators_temp(temp_inside, temp_outside, temp_pref) :-
+setInsideEffectors_temp(temp_inside, temp_outside, temp_pref) :-
     temp_inside < temp_pref,
     temp_outside < temp_pref,
-    setActuators(r, temp_pref).
+    setEffectors(r, temp_pref).
 
-setInsideActuators_temp(temp_inside, temp_outside, temp_pref) :-
+setInsideEffectors_temp(temp_inside, temp_outside, temp_pref) :-
     temp_inside > temp_pref,
     temp_outside > temp_pref,
-    setActuators(ac, temp_pref).
+    setEffectors(ac, temp_pref).
 
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Actuators),
+    preferencesInstance(PIId, temp, Y, Effectors),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
@@ -200,11 +200,11 @@ set(PIId, temp) :-
     sensorValue(SensorId_inside, X_inside),
     X_inside > Y,
     X_outside > Y,
-	setOutsideActuators(Actuators, 0),
-	setInsideActuators_temp(X_inside, X_outside, Y).
+	setOutsideEffectors(Effectors, 0),
+	setInsideEffectors_temp(X_inside, X_outside, Y).
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Actuators),
+    preferencesInstance(PIId, temp, Y, Effectors),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
@@ -217,14 +217,14 @@ set(PIId, temp) :-
     sensor(SensorId_outside, wind),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    preferencesInstance(PIId, wind, Y_wind, Effectors),
     X_wind <= Y_wind,
-	setOutsideActuators(Actuators, 1),
-	setInsideActuators(Actuators, 0).
+	setOutsideEffectors(Effectors, 1),
+	setInsideEffectors(Effectors, 0).
 
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Actuators),
+    preferencesInstance(PIId, temp, Y, Effectors),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
@@ -237,14 +237,14 @@ set(PIId, temp) :-
     sensor(SensorId_outside, wind),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    preferencesInstance(PIId, wind, Y_wind, Effectors),
     X_wind > Y_wind,
-	setOutsideActuators(Actuators, 0),
-	setInsideActuators(Actuators, Y).
+	setOutsideEffectors(Effectors, 0),
+	setInsideEffectors(Effectors, Y).
 
 
 set(PIId, noise) :-
-    preferencesInstance(PIId, noise, Y_noise, Actuators),
+    preferencesInstance(PIId, noise, Y_noise, Effectors),
     sensor(SensorId_outside, noise),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_noise_outside),
@@ -255,13 +255,13 @@ set(PIId, noise) :-
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_temp_outside),
-    preferencesInstance(PIId, temp, Y_temp, Actuators),
+    preferencesInstance(PIId, temp, Y_temp, Effectors),
     X_temp_inside \== Y_temp,
-    setOutsideActuators(Actuators, 0),
-    setActuators(ac, Y_temp).
+    setOutsideEffectors(Effectors, 0),
+    setEffectors(ac, Y_temp).
 
 set(PIId, noise) :-
-    preferencesInstance(PIId, noise, Y_noise, Actuators),
+    preferencesInstance(PIId, noise, Y_noise, Effectors),
     sensor(SensorId_outside, noise),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_noise_outside),
@@ -272,9 +272,9 @@ set(PIId, noise) :-
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_temp_outside),
-    preferencesInstance(PIId, temp, Y_temp, Actuators),
+    preferencesInstance(PIId, temp, Y_temp, Effectors),
     X_temp_inside == Y_temp,
-    setOutsideActuators(Actuators, 0).
+    setOutsideEffectors(Effectors, 0).
 
 %memberCheck(Element, List).
 memberCheck(H,[H|_]).
