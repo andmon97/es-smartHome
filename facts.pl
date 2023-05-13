@@ -17,9 +17,9 @@ sensor(outside_wind, wind).
 %sensorValue(SensorId, Value).
 :-dynamic(sensorValue/2).
 sensorValue(brightness, 0).
-sensorValue(brightness_outside, 10).
+sensorValue(brightness_outside, 0).
 sensorValue(temperature, 10).
-sensorValue(temperature_outside, 8).
+sensorValue(temperature_outside, 30).
 sensorValue(outside_noise, 20).
 sensorValue(outside_wind, 0).
 
@@ -72,7 +72,7 @@ actuatorValue(ac, 0). /* air conditioner */
 %preferencesInstance(PiiD, TypeId, ExpectedValueSensor, Actuators).
 :-dynamic(preferencesInstance/4).
 preferencesInstance(nullPreference, _, 0, []).
-preferencesInstance(study, light, 10, [l2, rs1, rs2]). /* if study only desk light */
+preferencesInstance(study, light, 10, [l2, rs1]). /* if study only desk light */
 preferencesInstance(study, temp, 20, [ac, r, w1, w2]).
 preferencesInstance(study, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(study, noise, 0, [ac, w1, w2]).
@@ -90,6 +90,6 @@ preferencesInstance(movie, temp, 25, [r, w1, w2, ac]).
 preferencesInstance(movie, wind, 0, [w1,w2]). /* close windows for wind*/
 preferencesInstance(movie, noise, 5, [ac, w1, w2]).
 
-preferencesInstance(clean, light, 10, [rs1, rs2]). /* if clean only roller s*/
+preferencesInstance(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/
 preferencesInstance(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
 preferencesInstance(clean, wind, 5, [w1,w2]). /* open windows for wind*/
