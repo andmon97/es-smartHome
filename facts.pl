@@ -3,6 +3,7 @@ propertyType(light).
 propertyType(temp).
 propertyType(noise).
 propertyType(wind).
+propertyType(rain).
 
 %sensor(SensorId, TypeId).
 :-dynamic(sensor/2).
@@ -12,6 +13,7 @@ sensor(temperature, temp).
 sensor(temperature_outside, temp).
 sensor(outside_noise, noise).
 sensor(outside_wind, wind).
+sensor(outside_rain, rain).
 
 
 
@@ -24,6 +26,7 @@ sensorValue(temperature_outside, 30).
 sensorValue(outside_noise, 20).
 sensorValue(outside_wind, 0).
 sensor(outside_noise, 0).
+sensor(outside_rain, 0).
 
 
 %effector(EffectorId, TypeId).
@@ -34,14 +37,16 @@ effector(l1, light). /* main light */
 effector(l2, light). /* desk light */
 effector(l3, light). /* bedside (left) light */
 effector(l4, light). /* bedside (right) light */
-effector(ac, temp).  /* air conditioner */
-effector(w1, temp). /* window 1 */
-effector(w1, wind).
 effector(rs1, light). /* roller shutter 1*/
-effector(w2, temp). /* window 2 */
-effector(w2, wind).
 effector(rs2, light). /* roller shutter 2*/
+effector(ac, temp).  /* air conditioner */
 effector(r, temp). /* radiator */
+effector(w1, temp). /* window 1 */
+effector(w2, temp). /* window 2 */
+effector(w1, wind).
+effector(w2, wind).
+effector(w1, rain).
+effector(w2, rain).
 
 
 

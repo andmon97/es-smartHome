@@ -127,6 +127,32 @@ set(PIId, light) :-
 	setOutsideEffectors(Effectors, 0), 
 	setInsideEffectors(Effectors, Y).
 
+setInsideEffectors_temp(temp_inside, temp_outside, temp_pref) :-
+    temp_inside < temp_pref,
+    temp_outside < temp_pref,
+    setEffectors(r, temp_pref).
+
+setInsideEffectors_temp(temp_inside, temp_outside, temp_pref) :-
+    temp_inside > temp_pref,
+    temp_outside > temp_pref,
+    setEffectors(ac, temp_pref).
+
+check_rain(Y_temp) -:
+    sensor(SensorId_outside, rain),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_rain),
+    X_rain == 0,
+	setOutsideEffectors(Effectors, 1),
+	setInsideEffectors(Effectors, 0).
+
+check_rain(Y_temp) -:
+    sensor(SensorId_outside, rain),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_rain),
+    X_rain == 1,
+	setOutsideEffectors(Effectors, 0),
+	setInsideEffectors_temp(Effectors, Y_temp).
+
 
 set(PIId, temp) :-
     preferencesInstance(PIId, temp, Y_temp, Effectors),
@@ -144,8 +170,8 @@ set(PIId, temp) :-
     sensorValue(SensorId_outside, X_wind),
     preferencesInstance(PIId, wind, Y_wind, Effectors),
     X_wind <= Y_wind,
-	setOutsideEffectors(Effectors, 1),
-	setInsideEffectors(Effectors, 0).
+    check_rain(Y_temp).
+
 
 set(PIId, temp) :-
     preferencesInstance(PIId, temp, Y_temp, Effectors),
@@ -179,16 +205,6 @@ set(PIId, temp) :-
 	setOutsideEffectors(Effectors, 0),
 	setInsideEffectors_temp(X_inside, X_outside, Y).
 
-setInsideEffectors_temp(temp_inside, temp_outside, temp_pref) :-
-    temp_inside < temp_pref,
-    temp_outside < temp_pref,
-    setEffectors(r, temp_pref).
-
-setInsideEffectors_temp(temp_inside, temp_outside, temp_pref) :-
-    temp_inside > temp_pref,
-    temp_outside > temp_pref,
-    setEffectors(ac, temp_pref).
-
 
 set(PIId, temp) :-
     preferencesInstance(PIId, temp, Y, Effectors),
@@ -219,8 +235,7 @@ set(PIId, temp) :-
     sensorValue(SensorId_outside, X_wind),
     preferencesInstance(PIId, wind, Y_wind, Effectors),
     X_wind <= Y_wind,
-	setOutsideEffectors(Effectors, 1),
-	setInsideEffectors(Effectors, 0).
+	check_rain(Y_temp).
 
 
 set(PIId, temp) :-
