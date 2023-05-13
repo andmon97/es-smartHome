@@ -87,7 +87,7 @@ preferencesInstance(study, noise, 0, [ac, w1, w2]).
 preferencesInstance(sleep, light, 0, [l1, l2, l3, l4, rs1, rs2]). /* turn off all lights and roller shutters */
 preferencesInstance(sleep, temp, 25, [ac, r, w1, w2]).
 preferencesInstance(sleep, wind, 0, [w1,w2]). /* close windows for wind*/
-preferencesInstance(sleep, noise, 2, [ac, w1, w2]).
+preferencesInstance(sleep, noise, 0, [ac, w1, w2]).
 
 preferencesInstance(turn_off, TypeId, 0, Effectors) :- setof(X, effector(X,TypeId),Effectors).
 preferencesInstance(turn_on, TypeId, 10, Effectors) :- setof(X, effector(X,TypeId),Effectors).
@@ -95,7 +95,7 @@ preferencesInstance(turn_on, TypeId, 10, Effectors) :- setof(X, effector(X,TypeI
 preferencesInstance(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
 preferencesInstance(movie, temp, 25, [r, w1, w2, ac]).
 preferencesInstance(movie, wind, 3, [w1,w2]). /* close windows for wind*/
-preferencesInstance(movie, noise, 5, [ac, w1, w2]).
+preferencesInstance(movie, noise, 0, [ac, w1, w2]).
 
 preferencesInstance(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/
 preferencesInstance(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
