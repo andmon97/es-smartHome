@@ -14,6 +14,7 @@ sensor(outside_noise, noise).
 sensor(outside_wind, wind).
 
 
+
 %sensorValue(SensorId, Value).
 :-dynamic(sensorValue/2).
 sensorValue(brightness, 0).
@@ -22,6 +23,7 @@ sensorValue(temperature, 10).
 sensorValue(temperature_outside, 30).
 sensorValue(outside_noise, 20).
 sensorValue(outside_wind, 0).
+sensor(outside_noise, 0).
 
 
 %actuator(ActuatorId, TypeId).
@@ -74,7 +76,7 @@ actuatorValue(ac, 0). /* air conditioner */
 preferencesInstance(nullPreference, _, 0, []).
 preferencesInstance(study, light, 10, [l2, rs1]). /* if study only desk light */
 preferencesInstance(study, temp, 20, [ac, r, w1, w2]).
-preferencesInstance(study, wind, 0, [w1,w2]). /* close windows for wind*/
+preferencesInstance(study, wind, 3, [w1,w2]). /* close windows for wind*/
 preferencesInstance(study, noise, 0, [ac, w1, w2]).
 
 preferencesInstance(sleep, light, 0, [l1, l2, l3, l4, rs1, rs2]). /* turn off all lights and roller shutters */
@@ -87,7 +89,7 @@ preferencesInstance(turn_on, TypeId, 10, Actuators) :- setof(X, actuator(X,TypeI
 
 preferencesInstance(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
 preferencesInstance(movie, temp, 25, [r, w1, w2, ac]).
-preferencesInstance(movie, wind, 0, [w1,w2]). /* close windows for wind*/
+preferencesInstance(movie, wind, 3, [w1,w2]). /* close windows for wind*/
 preferencesInstance(movie, noise, 5, [ac, w1, w2]).
 
 preferencesInstance(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/

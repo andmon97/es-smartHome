@@ -129,17 +129,42 @@ set(PIId, light) :-
 
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Actuators),
+    preferencesInstance(PIId, temp, Y_temp, Actuators),
     sensor(SensorId_outside, temp),
     outside(SensorId_outside),
     sensorValue(SensorId_outside, X_outside),
     sensor(SensorId_inside, temp),
     inside(SensorId_inside),
     sensorValue(SensorId_inside, X_inside),
-    X_inside < Y,
-    X_outside > Y,
+    X_inside < Y_temp,
+    X_outside > Y_temp,
+    %check the value of the sensor wind 
+    sensor(SensorId_outside, wind),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_wind),
+    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    X_wind <= Y_wind,
 	setOutsideActuators(Actuators, 1),
 	setInsideActuators(Actuators, 0).
+
+set(PIId, temp) :-
+    preferencesInstance(PIId, temp, Y_temp, Actuators),
+    sensor(SensorId_outside, temp),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_outside),
+    sensor(SensorId_inside, temp),
+    inside(SensorId_inside),
+    sensorValue(SensorId_inside, X_inside),
+    X_inside < Y_temp,
+    X_outside > Y_temp,
+    %check the value of the sensor wind 
+    sensor(SensorId_outside, wind),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_wind),
+    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    X_wind > Y_wind,
+	setOutsideActuators(Actuators, 0),
+	setInsideActuators(Actuators, Y_temp).
 
 set(PIId, temp) :-
     preferencesInstance(PIId, temp, Y, Actuators),
@@ -188,8 +213,35 @@ set(PIId, temp) :-
     sensorValue(SensorId_inside, X_inside),
     X_inside > Y,
     X_outside < Y,
+    %check the value of the sensor wind 
+    sensor(SensorId_outside, wind),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_wind),
+    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    X_wind <= Y_wind,
 	setOutsideActuators(Actuators, 1),
 	setInsideActuators(Actuators, 0).
+
+
+set(PIId, temp) :-
+    preferencesInstance(PIId, temp, Y, Actuators),
+    sensor(SensorId_outside, temp),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_outside),
+    sensor(SensorId_inside, temp),
+    inside(SensorId_inside),
+    sensorValue(SensorId_inside, X_inside),
+    X_inside > Y,
+    X_outside < Y,
+    %check the value of the sensor wind 
+    sensor(SensorId_outside, wind),
+    outside(SensorId_outside),
+    sensorValue(SensorId_outside, X_wind),
+    preferencesInstance(PIId, wind, Y_wind, Actuators),
+    X_wind > Y_wind,
+	setOutsideActuators(Actuators, 0),
+	setInsideActuators(Actuators, Y).
+
 
 set(PIId, noise) :-
     preferencesInstance(PIId, noise, Y_noise, Actuators),
