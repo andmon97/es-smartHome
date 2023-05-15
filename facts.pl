@@ -7,10 +7,10 @@ propertyType(rain).
 
 %sensor(SensorId, TypeId).
 :-dynamic(sensor/2).
-sensor(brightness_outside, light).
-sensor(brightness, light).
-sensor(temperature, temp).
-sensor(temperature_outside, temp).
+sensor(outside_brightness, light).
+sensor(inside_brightness, light).
+sensor(inside_temperature, temp).
+sensor(outside_temperature, temp).
 sensor(outside_noise, noise).
 sensor(outside_wind, wind).
 sensor(outside_rain, rain).
@@ -19,10 +19,10 @@ sensor(outside_rain, rain).
 
 %sensorValue(SensorId, Value).
 :-dynamic(sensorValue/2).
-sensorValue(brightness, 0).
-sensorValue(brightness_outside, 0).
-sensorValue(temperature, 10).
-sensorValue(temperature_outside, 30).
+sensorValue(inside_brightness, 0).
+sensorValue(outside_brightness, 0).
+sensorValue(inside_temperature, 10).
+sensorValue(outside_temperature, 30).
 sensorValue(outside_noise, 20).
 sensorValue(outside_wind, 0).
 sensorValue(outside_rain, 0).
@@ -51,8 +51,8 @@ effector(w2, rain).
 
 %inside(Id).
 :-dynamic(inside/1).
-inside(brightness).
-inside(temperature).
+inside(inside_brightness).
+inside(inside_temperature).
 inside(l1).
 inside(l2).
 inside(l3).

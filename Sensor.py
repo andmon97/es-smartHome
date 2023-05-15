@@ -24,8 +24,8 @@ def getSensorValue(sensorID, prolog):
 
 def setSensorValue(sensorID, value, prolog):
     old_value = str(getSensorValue(sensorID, prolog))
-    prolog.query("retract(sensorValue(" + str(sensorID) +" ,"+str(old_value)+"), assert(sensorValue(" + str(sensorID)+ ", "+str(value)+")." )
-    # query("replace_existing_fact(sensorValue(" + sensorID +" ,_), sensorValue(" + sensorID+ ", "+value+"))")
+    list(prolog.query("replace_existing_fact(sensorValue(" + str(sensorID) +" ,"+str(old_value)+"), sensorValue(" + str(sensorID)+ ", "+str(value)+"))." ))
+    #prolog.query("replace_existing_fact(sensorValue(" + sensorID +" ,_), sensorValue(" + sensorID+ ", "+value+"))")
 
 
 def generete_random_sensors(prolog):

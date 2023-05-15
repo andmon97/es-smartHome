@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 import Sensor
 import Effector
 from pyswip import Prolog
+from Sensor import *
 
 def initialize_prolog():
     global prolog
@@ -16,21 +17,21 @@ def initialize_prolog():
 
 def simulate_sensors():
     print("simula sensori")
-    Sensor.setSensorValue("brightness", "20", prolog)
-    print(Sensor.getSensorValue("brightness", prolog))
+    # setSensorValue("inside_brightness", "20", prolog)
+    # print(getSensorValue("inside_brightness", prolog))
 
-    # Sensor.generete_random_sensors(prolog)
-    # sensors = Sensor.getAllSensor(prolog)
+    Sensor.generete_random_sensors(prolog)
+    sensors = Sensor.getAllSensor(prolog)
 
-    # i=0
-    # for k, v in sensors.items():
-    #      label_sensor_name = tk.Label(frame2, text=k, font=("Microsoft YaHei",10))
-    #      label_sensor_name.grid(row=i, column=0, pady=7, padx=10)
+    i=0
+    for k, v in sensors.items():
+         label_sensor_name = tk.Label(frame2, text=k, font=("Microsoft YaHei",10))
+         label_sensor_name.grid(row=i, column=0, pady=7, padx=10)
 
-    #      label_sensor_value = tk.Label(frame2, text=v[1], font=("Microsoft YaHei",10))
-    #      label_sensor_value.grid(row=i, column=1, pady=7, padx=10)
+         label_sensor_value = tk.Label(frame2, text=v[1], font=("Microsoft YaHei",10))
+         label_sensor_value.grid(row=i, column=1, pady=7, padx=10)
 
-    #      i=i+1
+         i=i+1
 
     
 
