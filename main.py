@@ -3,12 +3,40 @@ from tkinter import *
 from tkinter.font import BOLD
 from tkinter import ttk
 from PIL import Image, ImageTk
+import Sensor
+import Effector
+from pyswip import Prolog
+
+def initialize_prolog():
+    global prolog
+    prolog = Prolog()
+    prolog.consult("facts.pl")   
+    prolog.consult("rules.pl") 
+
 
 def simulate_sensors():
     print("simula sensori")
+    Sensor.setSensorValue("brightness", "20", prolog)
+    print(Sensor.getSensorValue("brightness", prolog))
 
+    # Sensor.generete_random_sensors(prolog)
+    # sensors = Sensor.getAllSensor(prolog)
+
+    # i=0
+    # for k, v in sensors.items():
+    #      label_sensor_name = tk.Label(frame2, text=k, font=("Microsoft YaHei",10))
+    #      label_sensor_name.grid(row=i, column=0, pady=7, padx=10)
+
+    #      label_sensor_value = tk.Label(frame2, text=v[1], font=("Microsoft YaHei",10))
+    #      label_sensor_value.grid(row=i, column=1, pady=7, padx=10)
+
+    #      i=i+1
+
+    
+
+
+initialize_prolog()
 window = tk.Tk()
-
 
 window.title("Smart Room")
 window.geometry("1000x1000")
@@ -54,8 +82,26 @@ action_combobox.bind("<<ComboboxSelected>>", select_action)
 photo = ImageTk.PhotoImage(file='pianta stanza.jpg')
 
 label_image = tk.Label(frame3, image=photo, pady=0)
-label_image.place(x=0, y=0, relwidth=1.0, relheight=1.0)
+label_image.grid()
 
 
+
+effectors = Effector.getAllEffectors()
+
+i=0
+for k, v in effectors.items():
+    label_effector_name = tk.Label(frame4, text=k, font=("Microsoft YaHei",10))
+    label_effector_name.grid(row=i, column=0, pady=7, padx=10)
+
+    label_effector_value = tk.Label(frame4, text=v[1], font=("Microsoft YaHei",10))
+    label_effector_value.grid(row=i, column=1, pady=7, padx=10)
+
+    i=i+1
+
+def explanation():
+     print("explanation")
+
+button_explanation = tk.Button(frame4, text="Ask explanation", font=("Microsoft YaHei",12), command=explanation)
+button_explanation.grid(row = 10, column = 1, padx=10, pady=10)
 
 window.mainloop()

@@ -25,8 +25,7 @@ sensorValue(temperature, 10).
 sensorValue(temperature_outside, 30).
 sensorValue(outside_noise, 20).
 sensorValue(outside_wind, 0).
-sensor(outside_noise, 0).
-sensor(outside_rain, 0).
+sensorValue(outside_rain, 0).
 
 
 %effector(EffectorId, TypeId).
