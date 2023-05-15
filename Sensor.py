@@ -39,3 +39,5 @@ def generete_random_sensors(prolog):
             setSensorValue(k, random.randint(0,10), prolog)
         elif v[0] == 'rain':
             setSensorValue(k, random.randint(0,1), prolog)
+
+

@@ -17,9 +17,6 @@ def initialize_prolog():
 
 def simulate_sensors():
     print("simula sensori")
-    # setSensorValue("inside_brightness", "20", prolog)
-    # print(getSensorValue("inside_brightness", prolog))
-
     Sensor.generete_random_sensors(prolog)
     sensors = Sensor.getAllSensor(prolog)
 
@@ -32,7 +29,6 @@ def simulate_sensors():
          label_sensor_value.grid(row=i, column=1, pady=7, padx=10)
 
          i=i+1
-
     
 
 
@@ -77,6 +73,21 @@ action_combobox["state"] = "readonly"
 
 def select_action(event):
       print(action_selected.get())
+      Effector.resetEffectors(prolog)
+      Effector.checkPreferences(action_selected.get(), prolog)
+      effectors = Effector.getAllEffectors(prolog)
+
+      i=0
+      for k, v in effectors.items():
+            label_effector_name = tk.Label(frame4, text=k, font=("Microsoft YaHei",10))
+            label_effector_name.grid(row=i, column=0, pady=7, padx=10)
+
+            label_effector_value = tk.Label(frame4, text=v[1], font=("Microsoft YaHei",10))
+            label_effector_value.grid(row=i, column=1, pady=7, padx=10)
+
+            i=i+1
+
+      
 
 action_combobox.bind("<<ComboboxSelected>>", select_action)
 
@@ -87,17 +98,7 @@ label_image.grid()
 
 
 
-effectors = Effector.getAllEffectors()
 
-i=0
-for k, v in effectors.items():
-    label_effector_name = tk.Label(frame4, text=k, font=("Microsoft YaHei",10))
-    label_effector_name.grid(row=i, column=0, pady=7, padx=10)
-
-    label_effector_value = tk.Label(frame4, text=v[1], font=("Microsoft YaHei",10))
-    label_effector_value.grid(row=i, column=1, pady=7, padx=10)
-
-    i=i+1
 
 def explanation():
      print("explanation")

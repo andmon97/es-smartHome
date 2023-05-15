@@ -30,11 +30,11 @@ setEffectors([H|T], Y) :-
     T \== [],
     !,
     setEffectors(T, Y),
-	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
+	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
 
 setEffectors([H|_], Y) :-
     !,
-	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
+	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
 
 setEffectors(_, _).
 
@@ -43,11 +43,11 @@ setEffectors([H|T], Y) :-
     T \== [],
     !,
     setEffectors(T, Y),
-	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
+	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
 
 setEffectors([H|_], Y) :-
     !,
-	replace_existing_fact(actuatorValue(H,_), actuatorValue(H, Y)).
+	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
 
 setEffectors(_, _).
     
@@ -201,7 +201,7 @@ set(PIId, temp) :-
     X_inside < Y,
     X_outside < Y,
 	setOutsideEffectors(Effectors, 0),
-	setInsideEffectors_temp(X_inside, X_outside, Y).
+	setInsideEffectors_temp(X_inside, Y).
 
 
 set(PIId, temp) :-
@@ -215,7 +215,7 @@ set(PIId, temp) :-
     X_inside > Y,
     X_outside > Y,
 	setOutsideEffectors(Effectors, 0),
-	setInsideEffectors_temp(X_inside, X_outside, Y).
+	setInsideEffectors_temp(X_inside, Y).
 
 set(PIId, temp) :-
     preferencesInstance(PIId, temp, Y, Effectors),
