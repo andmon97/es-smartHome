@@ -1,3 +1,5 @@
+
+
 replace_existing_fact(OldFact, NewFact) :-
     call(OldFact), 
     !,
@@ -127,184 +129,143 @@ set(PIId, light) :-
 	setOutsideEffectors(Effectors, 0), 
 	setInsideEffectors(Effectors, Y).
 
-setInsideEffectors_temp(temp_inside, temp_pref) :-
-    temp_inside < temp_pref,
-    setEffectors(r, temp_pref).
+setInsideEffectors_temp(X_temp_inside, Y_temp) :-
+    (X_temp_inside < Y_temp ->  setEffectors([r], Y_temp); setEffectors([ac], Y_temp) ).
 
-setInsideEffectors_temp(temp_inside, temp_pref) :-
-    temp_inside > temp_pref,
-    setEffectors(ac, temp_pref).
 
-check_rain(Y_temp) -:
-    sensor(SensorId_outside, rain),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_rain),
-    X_rain == 0,
-	setOutsideEffectors(Effectors, 1),
-	setInsideEffectors(Effectors, 0).
 
-check_rain(Y_temp) -:
-    sensor(SensorId_outside, rain),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_rain),
-    X_rain == 1,
-	setOutsideEffectors(Effectors, 0),
-	setInsideEffectors_temp(Effectors, Y_temp).
 
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y_temp, Effectors),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_outside),
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_inside),
-    X_inside < Y_temp,
-    X_outside > Y_temp,
-    %check the value of the sensor wind 
-    sensor(SensorId_outside, wind),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Effectors),
-    X_wind <= Y_wind,
-    check_rain(Y_temp).
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
+    sensor(SensorId_insideTemp, temp),
+    sensorValue(SensorId_insideTemp, X_inside),
+    inside(SensorId_insideTemp),
+    X_inside =:= Y_temp,
+    !.
 
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y_temp, Effectors),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_outside),
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_inside),
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
+    sensor(SensorId_outsideTemp, temp),
+    outside(SensorId_outsideTemp),
+    sensorValue(SensorId_outsideTemp, X_outside),
+    sensor(SensorId_insideTemp, temp),
+    inside(SensorId_insideTemp),
+    sensorValue(SensorId_insideTemp, X_inside),
     X_inside < Y_temp,
     X_outside > Y_temp,
-    %check the value of the sensor wind 
-    sensor(SensorId_outside, wind),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Effectors),
-    X_wind > Y_wind,
-	setOutsideEffectors(Effectors, 0),
+	%check the value of the sensor wind 
+    sensor(SensorId_wind, wind),
+    outside(SensorId_wind),
+    sensorValue(SensorId_wind, X_wind),
+    preferencesInstance(PIId, wind, Y_wind, EffectorsWind),
+    (X_wind =< Y_wind,
+    sensor(SensorId_rain, rain),
+    sensorValue(SensorId_rain, X_rain),
+        (X_rain =:= 0 ->
+        setOutsideEffectors(EffectorsTemp, 1),
+        setInsideEffectors(EffectorsTemp, 0)
+        ;
+        setOutsideEffectors(EffectorsTemp, 0),
+        setInsideEffectors_temp(X_inside, Y_temp)
+        )
+    ; 
+    setOutsideEffectors(EffectorsTemp, 0),
+	setInsideEffectors_temp(X_inside, Y_temp)
+    ).
+
+
+
+
+
+
+
+set(PIId, temp) :-
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
+    sensor(SensorId_outsideTemp, temp),
+    outside(SensorId_outsideTemp),
+    sensorValue(SensorId_outsideTemp, X_outside),
+    sensor(SensorId_insideTemp, temp),
+    inside(SensorId_insideTemp),
+    sensorValue(SensorId_insideTemp, X_inside),
+    X_inside < Y_temp,
+    X_outside < Y_temp,
+	setOutsideEffectors(EffectorsTemp, 0),
 	setInsideEffectors_temp(X_inside, Y_temp).
 
-set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Effectors),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_outside),
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_inside),
-    X_inside < Y,
-    X_outside < Y,
-	setOutsideEffectors(Effectors, 0),
-	setInsideEffectors_temp(X_inside, Y).
-
 
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Effectors),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_outside),
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_inside),
-    X_inside > Y,
-    X_outside > Y,
-	setOutsideEffectors(Effectors, 0),
-	setInsideEffectors_temp(X_inside, Y).
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
+    sensor(SensorId_outsideTemp, temp),
+    outside(SensorId_outsideTemp),
+    sensorValue(SensorId_outsideTemp, X_outside),
+    sensor(SensorId_insideTemp, temp),
+    inside(SensorId_insideTemp),
+    sensorValue(SensorId_insideTemp, X_inside),
+    X_inside > Y_temp,
+    X_outside > Y_temp,
+	setOutsideEffectors(EffectorsTemp, 0),
+	setInsideEffectors_temp(X_inside, Y_temp).
 
+
+
+    
 set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Effectors),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_outside),
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_inside),
-    X_inside > Y,
-    X_outside < Y,
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
+    sensor(SensorId_outsideTemp, temp),
+    outside(SensorId_outsideTemp),
+    sensorValue(SensorId_outsideTemp, X_outside),
+    sensor(SensorId_insideTemp, temp),
+    inside(SensorId_insideTemp),
+    sensorValue(SensorId_insideTemp, X_inside),
+    X_inside > Y_temp,
+    X_outside < Y_temp,
     %check the value of the sensor wind 
-    sensor(SensorId_outside, wind),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Effectors),
-    X_wind <= Y_wind,
-	check_rain(Y_temp).
-
-
-set(PIId, temp) :-
-    preferencesInstance(PIId, temp, Y, Effectors),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_outside),
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_inside),
-    X_inside > Y,
-    X_outside < Y,
-    %check the value of the sensor wind 
-    sensor(SensorId_outside, wind),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_wind),
-    preferencesInstance(PIId, wind, Y_wind, Effectors),
-    X_wind > Y_wind,
-	setOutsideEffectors(Effectors, 0),
-	setInsideEffectors_temp(X_inside, Y).
+    sensor(SensorId_wind, wind),
+    sensorValue(SensorId_wind, X_wind),
+    preferencesInstance(PIId, wind, Y_wind, EffectorsWind),
+    (X_wind > Y_wind -> 
+    setOutsideEffectors(EffectorsTemp, 0), 
+    setInsideEffectors_temp(X_inside, Y_temp)
+    ; 
+    sensor(SensorId_rain, rain),
+    sensorValue(SensorId_rain, X_rain),
+        (X_rain =:= 0 ->
+        setOutsideEffectors(EffectorsTemp, 1),
+        setInsideEffectors(EffectorsTemp, 0)
+        ;
+        setOutsideEffectors(EffectorsTemp, 0),
+        setInsideEffectors_temp(X_inside, Y_temp)
+        )
+    ). 
 
 
 set(PIId, noise) :-
-    preferencesInstance(PIId, noise, Y_noise, Effectors),
-    sensor(SensorId_outside, noise),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_noise_outside),
+    preferencesInstance(PIId, noise, Y_noise, EffectorsNoise),
+    sensor(SensorId_noise, noise),
+    sensorValue(SensorId_noise, X_noise_outside),
     X_noise_outside > Y_noise,
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_temp_inside),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_temp_outside),
-    preferencesInstance(PIId, temp, Y_temp, Effectors),
+    sensor(SensorId_insideTemp, temp),
+    inside(SensorId_insideTemp),
+    sensorValue(SensorId_insideTemp, X_temp_inside),
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
     X_temp_inside \== Y_temp,
-    setOutsideEffectors(Effectors, 0),
-    setEffectors(ac, Y_temp).
+    setOutsideEffectors(EffectorsNoise, 0),
+    setInsideEffectors_temp(X_temp_inside, Y_temp).
 
 set(PIId, noise) :-
-    preferencesInstance(PIId, noise, Y_noise, Effectors),
-    sensor(SensorId_outside, noise),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_noise_outside),
+    preferencesInstance(PIId, noise, Y_noise, EffectorsNoise),
+    sensor(SensorId_noise, noise),
+    sensorValue(SensorId_noise, X_noise_outside),
     X_noise_outside > Y_noise,
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_temp_inside),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_temp_outside),
-    preferencesInstance(PIId, temp, Y_temp, Effectors),
+    sensor(SensorId_insideTemp, temp),
+    sensorValue(SensorId_insideTemp, X_temp_inside),
+    preferencesInstance(PIId, temp, Y_temp, EffectorsTemp),
     X_temp_inside == Y_temp,
-    setOutsideEffectors(Effectors, 0).
+    setOutsideEffectors(EffectorsNoise, 0).
 
-set(PIId, noise) :-
-    preferencesInstance(PIId, noise, Y_noise, Effectors),
-    sensor(SensorId_outside, noise),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_noise_outside),
-    X_noise_outside > Y_noise,
-    sensor(SensorId_inside, temp),
-    inside(SensorId_inside),
-    sensorValue(SensorId_inside, X_temp_inside),
-    sensor(SensorId_outside, temp),
-    outside(SensorId_outside),
-    sensorValue(SensorId_outside, X_temp_outside),
-    preferencesInstance(PIId, temp, Y_temp, Effectors),
-    X_temp_inside \== Y_temp,
-    setOutsideEffectors(Effectors, 0).
-    setInsideEffectors_temp(X_temp_inside, Y_temp)
+
 
 %memberCheck(Element, List).
 memberCheck(H,[H|_]).

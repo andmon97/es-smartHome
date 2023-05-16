@@ -20,12 +20,12 @@ sensor(outside_rain, rain).
 %sensorValue(SensorId, Value).
 :-dynamic(sensorValue/2).
 sensorValue(inside_brightness, 0).
-sensorValue(outside_brightness, 0).
-sensorValue(inside_temperature, 10).
-sensorValue(outside_temperature, 30).
-sensorValue(outside_noise, 20).
+sensorValue(outside_brightness, 10).
+sensorValue(outside_temperature, 10).
+sensorValue(inside_temperature, 30).
+sensorValue(outside_noise, 3).
 sensorValue(outside_wind, 0).
-sensorValue(outside_rain, 0).
+sensorValue(outside_rain, 1).
 
 
 %effector(EffectorId, TypeId).

@@ -32,9 +32,12 @@ def generete_random_sensors(prolog):
     sensors = getAllSensor(prolog)
     for k, v in sensors.items():
         if v[0] == 'light':
-            setSensorValue(k, random.randint(0,10), prolog)
+            if k=='outside_brightness':
+               setSensorValue(k, random.randint(0,10), prolog)
+            else:
+                setSensorValue(k, 0, prolog)
         elif v[0] == 'temp':
-            setSensorValue(k, random.randint(15,20), prolog)
+            setSensorValue(k, random.randint(1,50), prolog)
         elif v[0] == 'noise' or v[0] == 'wind':
             setSensorValue(k, random.randint(0,10), prolog)
         elif v[0] == 'rain':

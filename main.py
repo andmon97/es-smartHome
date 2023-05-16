@@ -71,6 +71,20 @@ action_combobox["values"] = ["study", "movie", "sleep", "music", "clean"]
 action_combobox.pack(padx=5)
 action_combobox["state"] = "readonly"
 
+
+Effector.generete_random_effectors(prolog)
+effectors = Effector.getAllEffectors(prolog)
+i=0
+for k, v in effectors.items():
+    label_effector_name = tk.Label(frame4, text=k, font=("Microsoft YaHei",10))
+    label_effector_name.grid(row=i, column=0, pady=7, padx=10)
+
+    label_effector_value = tk.Label(frame4, text=v[1], font=("Microsoft YaHei",10))
+    label_effector_value.grid(row=i, column=1, pady=7, padx=10)
+
+    i=i+1
+
+
 def select_action(event):
       print(action_selected.get())
       Effector.resetEffectors(prolog)
@@ -91,10 +105,20 @@ def select_action(event):
 
 action_combobox.bind("<<ComboboxSelected>>", select_action)
 
-photo = ImageTk.PhotoImage(file='pianta stanza.jpg')
-
+photo = ImageTk.PhotoImage(file='pianta stanza.png')
 label_image = tk.Label(frame3, image=photo, pady=0)
 label_image.grid()
+
+label_light = tk.Label(frame3, text= "L1, L2, L3, L4 = lights", font=("Microsoft YaHei",10))
+label_light.grid()
+label_ac = tk.Label(frame3, text= "AC = air conditioner", font=("Microsoft YaHei",10))
+label_ac.grid()
+label_r = tk.Label(frame3, text= "R = radiator", font=("Microsoft YaHei",10))
+label_r.grid()
+label_windows = tk.Label(frame3, text= "W1, W2 = windows", font=("Microsoft YaHei",10))
+label_windows.grid()
+label_rs = tk.Label(frame3, text= "RS1, RS2 = roller shutters", font=("Microsoft YaHei",10))
+label_rs.grid()
 
 
 
