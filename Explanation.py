@@ -28,3 +28,12 @@ def getEffectorsValue():
         elif 'set(' in l:
             effectors['action'] = l.split('(')[1].split(',')[0]
     print (effectors)
+
+def getExplanation():
+    text=""
+    text = text + "The action selected is "+ effectors['action'] + ".\n" 
+    
+    
+   
+    return text
+    
