@@ -10,7 +10,6 @@ def getSensorValues():
             nameSensor = l.split('(')[1].split(',')[0]
             valueSensor = l.split(',')[1].split(')')[0]
             sensors[nameSensor] = valueSensor
-    print (sensors)
 
 
 def getEffectorsValue():
@@ -27,13 +26,16 @@ def getEffectorsValue():
             effectors[nameEffector] = valueEffector
         elif 'set(' in l:
             effectors['action'] = l.split('(')[1].split(',')[0]
-    print (effectors)
 
-def getExplanation():
+def getExplanation(prolog):
     text=""
-    text = text + "The action selected is "+ effectors['action'] + ".\n" 
-    
-    
+    text = text + "The action selected is "+ effectors['action'] + ".\n"
+    preference = list(prolog.query("preferencesInstance("+effectors['action']+", temp, V, E)"))
+    print(preference[0]['V'])
+    if sensors['outside_temperature'] == preference[0]['V']:
+         text = text + "Since the inside temperature is equal to the desired temperature (" + sensors['outside_temperature'] + ' == ' + preference[0]['V'] + "), the expert system doesn not performs any changes.\n"
+    elif sensors['inside_temperature'] < preference[0]['V'] and sensors['outside_temperature'] > preference[0]['V']:
+        text = text  
    
     return text
     

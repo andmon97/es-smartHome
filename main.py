@@ -134,7 +134,7 @@ def explanation():
      window2.title("Explanation")
      window2.geometry("500x500")
      window2.resizable(False, False)
-     txt = Explanation.getExplanation()
+     txt = Explanation.getExplanation(prolog)
      label_explanation = tk.Label(window2, text=txt, font=("Microsoft YaHei",10))
      label_explanation.grid()
      
