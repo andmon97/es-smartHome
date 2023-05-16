@@ -5,6 +5,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import Sensor
 import Effector
+import Explanation
 from pyswip import Prolog
 from Sensor import *
 
@@ -126,6 +127,8 @@ label_rs.grid()
 
 def explanation():
      print("explanation")
+     Explanation.getSensorValues()
+     Explanation.getEffectorsValue()
 
 button_explanation = tk.Button(frame4, text="Ask explanation", font=("Microsoft YaHei",12), command=explanation)
 button_explanation.grid(row = 10, column = 1, padx=10, pady=10)
