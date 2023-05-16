@@ -90,7 +90,7 @@ def select_action(event):
       Effector.resetEffectors(prolog)
       Effector.checkPreferences(action_selected.get(), prolog)
       effectors = Effector.getAllEffectors(prolog)
-
+    
       i=0
       for k, v in effectors.items():
             label_effector_name = tk.Label(frame4, text=k, font=("Microsoft YaHei",10))

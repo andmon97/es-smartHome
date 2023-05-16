@@ -30,17 +30,28 @@ def setSensorValue(sensorID, value, prolog):
 
 def generete_random_sensors(prolog):
     sensors = getAllSensor(prolog)
+    f = open("logActions.txt", "w")
+
     for k, v in sensors.items():
         if v[0] == 'light':
             if k=='outside_brightness':
-               setSensorValue(k, random.randint(0,10), prolog)
+               n = random.randint(0,10)
+               setSensorValue(k, n, prolog)
             else:
-                setSensorValue(k, 0, prolog)
+                n = 0
+                setSensorValue(k, n, prolog)
         elif v[0] == 'temp':
-            setSensorValue(k, random.randint(1,50), prolog)
+            n = random.randint(1,50)
+            setSensorValue(k, n, prolog)
         elif v[0] == 'noise' or v[0] == 'wind':
-            setSensorValue(k, random.randint(0,10), prolog)
+            n = random.randint(0,10)
+            setSensorValue(k, n, prolog)
         elif v[0] == 'rain':
-            setSensorValue(k, random.randint(0,1), prolog)
+            n = random.randint(0,1)
+            setSensorValue(k, n, prolog)
+        
+        # print in the logActionas file the string setSensorValue(k, n)
+        f.write("setSensorValue("+k+", "+str(n)+")\n")
+    f.close()
 
 

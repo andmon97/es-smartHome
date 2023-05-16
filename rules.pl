@@ -1,5 +1,3 @@
-
-
 replace_existing_fact(OldFact, NewFact) :-
     call(OldFact), 
     !,
@@ -32,24 +30,20 @@ setEffectors([H|T], Y) :-
     T \== [],
     !,
     setEffectors(T, Y),
-	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
+	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)),
+    % write in a file the line of code to set the effector H to the value Y
+    open('logActions.txt', append, Stream),
+    write(Stream, 'setEffector('), write(Stream, H), write(Stream, ','), write(Stream, Y), write(Stream, ').'),nl(Stream),
+    close(Stream).
+
 
 setEffectors([H|_], Y) :-
     !,
-	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
-
-setEffectors(_, _).
-
-%setEffectors(Effectors, Value).
-setEffectors([H|T], Y) :-
-    T \== [],
-    !,
-    setEffectors(T, Y),
-	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
-
-setEffectors([H|_], Y) :-
-    !,
-	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)).
+	replace_existing_fact(effectorValue(H,_), effectorValue(H, Y)),
+    % write in a file the line of code to set the effector H to the value Y
+    open('logActions.txt', append, Stream),
+    write(Stream, 'setEffector('), write(Stream, H), write(Stream, ','), write(Stream, Y), write(Stream, ').'),nl(Stream),
+    close(Stream).
 
 setEffectors(_, _).
     

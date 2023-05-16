@@ -43,6 +43,8 @@ def resetEffectors(prolog):
 
 def checkPreferences(action, prolog):
     #return bool(query("preferencesInstance("+name+", _, _, _)"))
+    # open the logActions file in append
+    f = open("logActions.txt", "a")
     query_list = list(prolog.query("preferencesInstance("+action+", T, V, E)"))
     print(query_list)
     print(len(query_list))
@@ -50,8 +52,10 @@ def checkPreferences(action, prolog):
     if len(query_list)>0:
         for pref in query_list:
             type = pref["T"]
+            f.write("set(" + action + ", " + type + ").\n")
             list(prolog.query("set(" + action + ", " + type + ")."))
-            print("set(" + action + ", " + type + ").")
+            
+    f.close()
 
 
 
