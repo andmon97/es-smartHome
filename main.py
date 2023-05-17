@@ -17,7 +17,6 @@ def initialize_prolog():
 
 
 def simulate_sensors():
-    print("simula sensori")
     Sensor.generete_random_sensors(prolog)
     sensors = Sensor.getAllSensor(prolog)
 
@@ -87,7 +86,6 @@ for k, v in effectors.items():
 
 
 def select_action(event):
-      print(action_selected.get())
       Effector.resetEffectors(prolog)
       Effector.checkPreferences(action_selected.get(), prolog)
       effectors = Effector.getAllEffectors(prolog)
@@ -126,7 +124,6 @@ label_rs.grid()
 
 
 def explanation():
-     print("explanation")
      Explanation.getSensorValues()
      Explanation.getEffectorsValue()
 
@@ -135,7 +132,7 @@ def explanation():
      window2.geometry("500x500")
      window2.resizable(False, False)
      txt = Explanation.getExplanation(prolog)
-     label_explanation = tk.Label(window2, text=txt, font=("Microsoft YaHei",10))
+     label_explanation = tk.Label(window2, text=txt, wraplength= 400, font=("Microsoft YaHei",10))
      label_explanation.grid()
      
      window2.mainloop()

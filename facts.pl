@@ -99,7 +99,7 @@ preferencesInstance(movie, noise, 0, [ac, w1, w2]).
 preferencesInstance(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/
 preferencesInstance(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
 preferencesInstance(clean, wind, 5, [w1,w2]). /* open windows for wind*/
-preferencesInstance(movie, noise, 6, [ac, w1, w2]). /* close windows for noise*/
+preferencesInstance(clean, noise, 6, [ac, w1, w2]). /* close windows for noise*/
 
 preferencesInstance(music, light, 5, [l1, l2, l3, l4, rs1, rs2]). /* if study only desk light */
 preferencesInstance(music, temp, 20, [ac, r, w1, w2]).

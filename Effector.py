@@ -46,8 +46,6 @@ def checkPreferences(action, prolog):
     # open the logActions file in append
     f = open("logActions.txt", "a")
     query_list = list(prolog.query("preferencesInstance("+action+", T, V, E)"))
-    print(query_list)
-    print(len(query_list))
     i=0
     if len(query_list)>0:
         for pref in query_list:

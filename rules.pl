@@ -124,7 +124,7 @@ set(PIId, light) :-
 	setInsideEffectors(Effectors, Y).
 
 setInsideEffectors_temp(X_temp_inside, Y_temp) :-
-    (X_temp_inside < Y_temp ->  setEffectors([r], Y_temp); setEffectors([ac], Y_temp) ).
+    (X_temp_inside < Y_temp ->  setEffectors([r], Y_temp), setEffectors([ar], 0); setEffectors([ac], Y_temp), setEffectors([r], 0) ).
 
 
 
@@ -221,15 +221,18 @@ set(PIId, temp) :-
     preferencesInstance(PIId, wind, Y_wind, EffectorsWind),
     (X_wind > Y_wind -> 
     setOutsideEffectors(EffectorsTemp, 0), 
+    setOutsideEffectors(EffectorsWind, 0), 
     setInsideEffectors_temp(X_inside, Y_temp)
     ; 
     sensor(SensorId_rain, rain),
     sensorValue(SensorId_rain, X_rain),
         (X_rain =:= 0 ->
         setOutsideEffectors(EffectorsTemp, 1),
+        setOutsideEffectors(EffectorsWind, 1),
         setInsideEffectors(EffectorsTemp, 0)
         ;
         setOutsideEffectors(EffectorsTemp, 0),
+        setOutsideEffectors(EffectorsWind, 0),
         setInsideEffectors_temp(X_inside, Y_temp)
         )
     ). 
