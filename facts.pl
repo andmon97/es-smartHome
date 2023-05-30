@@ -75,33 +75,33 @@ effectorValue(r, 0). /* radiator */
 effectorValue(ac, 0). /* air conditioner */
 
 
-%preferencesInstance(PIId, conditionId, ExpectedValueSensor, Effectors).
-:-dynamic(preferencesInstance/4).
-preferencesInstance(nullPreference, _, 0, []).
-preferencesInstance(study, light, 10, [l2, rs1]). /* if study only desk light */
-preferencesInstance(study, temp, 20, [ac, r, w1, w2]).
-preferencesInstance(study, wind, 3, [w1,w2]). /* close windows for wind*/
-preferencesInstance(study, noise, 0, [ac, w1, w2]).
+%preference(PIId, conditionId, ExpectedValueSensor, Effectors).
+:-dynamic(preference/4).
+preference(nullPreference, _, 0, []).
+preference(study, light, 10, [l2, rs1]). /* if study only desk light */
+preference(study, temp, 20, [ac, r, w1, w2]).
+preference(study, wind, 3, [w1,w2]). /* close windows for wind*/
+preference(study, noise, 0, [ac, w1, w2]).
 
-preferencesInstance(sleep, light, 0, [l1, l2, l3, l4, rs1, rs2]). /* turn off all lights and roller shutters */
-preferencesInstance(sleep, temp, 25, [ac, r, w1, w2]).
-preferencesInstance(sleep, wind, 0, [w1,w2]). /* close windows for wind*/
-preferencesInstance(sleep, noise, 0, [ac, w1, w2]).
+preference(sleep, light, 0, [l1, l2, l3, l4, rs1, rs2]). /* turn off all lights and roller shutters */
+preference(sleep, temp, 25, [ac, r, w1, w2]).
+preference(sleep, wind, 0, [w1,w2]). /* close windows for wind*/
+preference(sleep, noise, 0, [ac, w1, w2]).
 
-preferencesInstance(turn_off, conditionId, 0, Effectors) :- setof(X, effector(X,conditionId),Effectors).
-preferencesInstance(turn_on, conditionId, 10, Effectors) :- setof(X, effector(X,conditionId),Effectors).
+preference(turn_off, conditionId, 0, Effectors) :- setof(X, effector(X,conditionId),Effectors).
+preference(turn_on, conditionId, 10, Effectors) :- setof(X, effector(X,conditionId),Effectors).
 
-preferencesInstance(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
-preferencesInstance(movie, temp, 25, [r, w1, w2, ac]).
-preferencesInstance(movie, wind, 3, [w1,w2]). /* close windows for wind*/
-preferencesInstance(movie, noise, 0, [ac, w1, w2]).
+preference(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
+preference(movie, temp, 25, [r, w1, w2, ac]).
+preference(movie, wind, 3, [w1,w2]). /* close windows for wind*/
+preference(movie, noise, 0, [ac, w1, w2]).
 
-preferencesInstance(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/
-preferencesInstance(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
-preferencesInstance(clean, wind, 5, [w1,w2]). /* open windows for wind*/
-preferencesInstance(clean, noise, 6, [ac, w1, w2]). /* close windows for noise*/
+preference(clean, light, 10, [l1, rs1, rs2]). /* if clean only roller s*/
+preference(clean, temp, 20, [r, ac, w1,w2]). /* open windows */
+preference(clean, wind, 5, [w1,w2]). /* open windows for wind*/
+preference(clean, noise, 6, [ac, w1, w2]). /* close windows for noise*/
 
-preferencesInstance(music, light, 5, [l1, l2, l3, l4, rs1, rs2]). /* if study only desk light */
-preferencesInstance(music, temp, 20, [ac, r, w1, w2]).
-preferencesInstance(music, wind, 0, [w1,w2]). /* close windows for wind*/
-preferencesInstance(music, noise, 0, [ac, w1, w2]).
+preference(music, light, 5, [l1, l2, l3, l4, rs1, rs2]). /* if study only desk light */
+preference(music, temp, 20, [ac, r, w1, w2]).
+preference(music, wind, 0, [w1,w2]). /* close windows for wind*/
+preference(music, noise, 0, [ac, w1, w2]).

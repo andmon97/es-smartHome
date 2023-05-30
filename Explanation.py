@@ -35,14 +35,14 @@ def getExplanation(prolog):
 
 
     # decode the light setting
-    preference = list(prolog.query("preferencesInstance("+effectors['action']+", light, V, E)"))
+    preference = list(prolog.query("preference("+effectors['action']+", light, V, E)"))
     if int(sensors['outside_brightness']) >= int(preference[0]['V']):
         text = text + "Since the outside light is greater than the desired light, the expert system has turned off the light and opened the windows.\n"
     else:
         text = text + "Since the outside light is less than the desired light, the expert system has turned on the selected light at the desired value of brightness ("+  str(preference[0]['V']) +" and closed the windows.\n"
 
     #decode the temperature setting
-    preference_temp = list(prolog.query("preferencesInstance("+effectors['action']+", temp, V, E)"))
+    preference_temp = list(prolog.query("preference("+effectors['action']+", temp, V, E)"))
     
     if int(sensors['inside_temperature']) == int(preference_temp[0]['V']):
          text = text + "Since the inside temperature is equal to the desired temperature the expert system doesn not performs any changes.\n"
@@ -51,7 +51,7 @@ def getExplanation(prolog):
     elif int(sensors['inside_temperature']) < int(preference_temp[0]['V']) and int(sensors['outside_temperature']) > int(preference_temp[0]['V']):
         text = text + "Since the inside temperature is less then the desidered temperature and the outside temperature is greater the desidered one "
         text = text + " the expert system want to open the windows but first check the wind.\n"
-        preference_wind = list(prolog.query("preferencesInstance("+effectors['action']+", wind, V, E)"))
+        preference_wind = list(prolog.query("preference("+effectors['action']+", wind, V, E)"))
         if int(sensors['outside_wind']) <= int(preference_wind[0]['V']):
             text = text + "Since the wind is less or equal to the desidered "
             if int(sensors['outside_rain']) == 0:
@@ -104,7 +104,7 @@ def getExplanation(prolog):
     elif int(sensors['inside_temperature']) > int(preference_temp[0]['V']) and int(sensors['outside_temperature']) < int(preference_temp[0]['V']):
         text = text + "Since the inside temperature is greater then the desider temperature and the outside temperature is less then the desidered temperature " 
         text = text + " the expert system want to open the windows but first check the wind.\n"
-        preference_wind = list(prolog.query("preferencesInstance("+effectors['action']+", wind, V, E)"))
+        preference_wind = list(prolog.query("preference("+effectors['action']+", wind, V, E)"))
         if int(sensors['outside_wind']) > int(preference_wind[0]['V']):
             text = text + "Since the wind is greater to the desidered, the expert system decide to "
             if int(effectors['w1']) ==0 and int(effectors['w2']) ==0:
@@ -131,8 +131,8 @@ def getExplanation(prolog):
 
 
     # decode the noise setting
-    preference = list(prolog.query("preferencesInstance("+effectors['action']+", noise, V, E)"))
-    preferenceTemp = list(prolog.query("preferencesInstance("+effectors['action']+", temp, V, E)"))
+    preference = list(prolog.query("preference("+effectors['action']+", noise, V, E)"))
+    preferenceTemp = list(prolog.query("preference("+effectors['action']+", temp, V, E)"))
     if int(sensors['outside_noise']) > preference[0]['V']:
         text = text + "Since the outside noise is greater than the desired noise, the expert system "
         if int(sensors['outside_temperature']) == int(preferenceTemp[0]['V']):
