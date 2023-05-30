@@ -104,7 +104,7 @@ extractOutsideEffectors(_, L, X) :-
 %set(PIId).
 set(PIId) :-  set(PIId, _).
 
-%set(PIId, TypeId).
+%set(PIId, conditionId).
 set(PIId, light) :- 
     sensor(SensorId_outside, light),
     outside(SensorId_outside),
