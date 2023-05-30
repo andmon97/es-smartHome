@@ -1,11 +1,11 @@
-%environmentCondition(conditionId).
+%environmentCondition(IdCondition).
 environmentCondition(light).
 environmentCondition(temp).
 environmentCondition(noise).
 environmentCondition(wind).
 environmentCondition(rain).
 
-%sensor(SensorId, conditionId).
+%sensor(SensorId, IdCondition).
 :-dynamic(sensor/2).
 sensor(outside_brightness, light).
 sensor(inside_brightness, light).
@@ -28,7 +28,7 @@ sensorValue(outside_wind, 0).
 sensorValue(outside_rain, 1).
 
 
-%effector(EffectorId, conditionId).
+%effector(EffectorId, IdCondition).
 :-dynamic(effector/2).
 effector(X, noise) :-
     effector(X, temp).
@@ -75,7 +75,7 @@ effectorValue(r, 0). /* radiator */
 effectorValue(ac, 0). /* air conditioner */
 
 
-%preference(PIId, conditionId, ExpectedValueSensor, Effectors).
+%preference(IdAction, IdCondition, ExpectedValueSensor, Effectors).
 :-dynamic(preference/4).
 preference(nullPreference, _, 0, []).
 preference(study, light, 10, [l2, rs1]). /* if study only desk light */
@@ -88,8 +88,8 @@ preference(sleep, temp, 25, [ac, r, w1, w2]).
 preference(sleep, wind, 0, [w1,w2]). /* close windows for wind*/
 preference(sleep, noise, 0, [ac, w1, w2]).
 
-preference(turn_off, conditionId, 0, Effectors) :- setof(X, effector(X,conditionId),Effectors).
-preference(turn_on, conditionId, 10, Effectors) :- setof(X, effector(X,conditionId),Effectors).
+preference(turn_off, IdCondition, 0, Effectors) :- setof(X, effector(X,IdCondition),Effectors).
+preference(turn_on, IdCondition, 10, Effectors) :- setof(X, effector(X,IdCondition),Effectors).
 
 preference(movie, light, 5, [l3,l4, rs1, rs2]). /* if movie only bedside lights */
 preference(movie, temp, 25, [r, w1, w2, ac]).
