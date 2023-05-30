@@ -75,7 +75,7 @@ effectorValue(r, 0). /* radiator */
 effectorValue(ac, 0). /* air conditioner */
 
 
-%preferencesInstance(PiiD, TypeId, ExpectedValueSensor, Effectors).
+%preferencesInstance(actionId, TypeId, ExpectedValueSensor, Effectors).
 :-dynamic(preferencesInstance/4).
 preferencesInstance(nullPreference, _, 0, []).
 preferencesInstance(study, light, 10, [l2, rs1]). /* if study only desk light */

@@ -70,7 +70,7 @@ def modify_profile():
      window4.geometry("500x500")
      window4.resizable(False, False)
 
-     label_modify_action = tk.Label(window4, text="Select your action", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_modify_action = tk.Label(window4, text="Select your action", font=("Microsoft YaHei",10, BOLD))
      label_modify_action.grid(row=0, column=1)
      select_action_to_modify = tk.StringVar()
      modify_action_combobox = ttk.Combobox(window4, textvariable=select_action_to_modify)
@@ -78,7 +78,7 @@ def modify_profile():
      modify_action_combobox.grid(row=0, column=2)
      modify_action_combobox["state"] = "readonly"
 
-     label_light = tk.Label(window4, text="Light", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_light = tk.Label(window4, text="Light", font=("Microsoft YaHei",10, BOLD))
      label_light.grid(row=1, column=1)
      light_selected = tk.StringVar()
      light_combobox = ttk.Combobox(window4, textvariable=light_selected)
@@ -87,7 +87,7 @@ def modify_profile():
      light_combobox["state"] = "readonly"
 
     
-     label_temp = tk.Label(window4, text="Temperature", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_temp = tk.Label(window4, text="Temperature", font=("Microsoft YaHei",10,BOLD))
      label_temp.grid(row=2, column=1)
      temp_selected = tk.StringVar()
      temp_combobox = ttk.Combobox(window4, textvariable=temp_selected)
@@ -95,7 +95,7 @@ def modify_profile():
      temp_combobox.grid(row=2, column=2)
      temp_combobox["state"] = "readonly"
 
-     label_wind = tk.Label(window4, text="Wind", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_wind = tk.Label(window4, text="Wind", font=("Microsoft YaHei",10, BOLD))
      label_wind.grid(row=3, column=1)
      wind_selected = tk.StringVar()
      wind_combobox = ttk.Combobox(window4, textvariable=wind_selected)
@@ -104,7 +104,7 @@ def modify_profile():
      wind_combobox["state"] = "readonly"
 
 
-     label_noise = tk.Label(window4, text="Noise", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_noise = tk.Label(window4, text="Noise", font=("Microsoft YaHei",10, BOLD))
      label_noise.grid(row=4, column=1)
      noise_selected = tk.StringVar()
      noise_combobox = ttk.Combobox(window4, textvariable=noise_selected)
@@ -145,7 +145,7 @@ def show_profile():
      label_profile.pack()
 
      button_modify_profile= tk.Button(window3, text="Modify", bg='#BCA6E8', font=("Microsoft YaHei",12, BOLD), command=modify_profile)
-     button_modify_profile.pack()
+     button_modify_profile.place(x=310, y=650)
      
      window3.mainloop()
 
