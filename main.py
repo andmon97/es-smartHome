@@ -6,8 +6,10 @@ from PIL import Image, ImageTk
 import Sensor
 import Effector
 import Explanation
+import Profile
 from pyswip import Prolog
 from Sensor import *
+new_preference={}
 
 def initialize_prolog():
     global prolog
@@ -22,7 +24,9 @@ def simulate_sensors():
 
     i=0
     for k, v in sensors.items():
-         label_sensor_name = tk.Label(frame2, text=k, font=("Microsoft YaHei",10))
+         k=(k.split("_"))
+         txt=k[0].capitalize() + " " + k[1]
+         label_sensor_name = tk.Label(frame2, text=txt, font=("Microsoft YaHei",10))
          label_sensor_name.grid(row=i, column=0, pady=7, padx=10)
 
          label_sensor_value = tk.Label(frame2, text=v[1], font=("Microsoft YaHei",10))
@@ -45,9 +49,9 @@ window.columnconfigure(2, weight=1)
 
 
 frame1 = tk.Frame(window, background="#BFC0CB", heigh="100", width="200")
-frame2 = tk.Frame(window, background="yellow", heigh="100", width="200")
+frame2 = tk.Frame(window, background="#CCCCFF", heigh="100", width="200")
 frame3 = tk.Frame(window, background="#FFFFFF", heigh="100",width="200")
-frame4 = tk.Frame(window, background="purple", heigh="100", width="200")
+frame4 = tk.Frame(window, background="#CCCCFF", heigh="100", width="200")
 
 frame1.pack(fill=X)
 frame2.pack(fill=BOTH, expand=True, side=LEFT)
@@ -56,10 +60,104 @@ frame4.pack(fill=BOTH, expand=True, side=LEFT)
 
 
 
+
+
+     
+
+def modify_profile():
+     window4 = tk.Tk()
+     window4.title("Modify profile")
+     window4.geometry("500x500")
+     window4.resizable(False, False)
+
+     label_modify_action = tk.Label(window4, text="Select your action", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_modify_action.grid(row=0, column=1)
+     select_action_to_modify = tk.StringVar()
+     modify_action_combobox = ttk.Combobox(window4, textvariable=select_action_to_modify)
+     modify_action_combobox["values"] = ["study", "movie", "sleep", "music", "clean"]
+     modify_action_combobox.grid(row=0, column=2)
+     modify_action_combobox["state"] = "readonly"
+
+     label_light = tk.Label(window4, text="Light", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_light.grid(row=1, column=1)
+     light_selected = tk.StringVar()
+     light_combobox = ttk.Combobox(window4, textvariable=light_selected)
+     light_combobox["values"] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+     light_combobox.grid(row=1, column=2)
+     light_combobox["state"] = "readonly"
+
+    
+     label_temp = tk.Label(window4, text="Temperature", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_temp.grid(row=2, column=1)
+     temp_selected = tk.StringVar()
+     temp_combobox = ttk.Combobox(window4, textvariable=temp_selected)
+     temp_combobox["values"] = ["15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
+     temp_combobox.grid(row=2, column=2)
+     temp_combobox["state"] = "readonly"
+
+     label_wind = tk.Label(window4, text="Wind", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_wind.grid(row=3, column=1)
+     wind_selected = tk.StringVar()
+     wind_combobox = ttk.Combobox(window4, textvariable=wind_selected)
+     wind_combobox["values"] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+     wind_combobox.grid(row=3, column=2)
+     wind_combobox["state"] = "readonly"
+
+
+     label_noise = tk.Label(window4, text="Noise", bg="#BFC0CB", font=("Microsoft YaHei",10))
+     label_noise.grid(row=4, column=1)
+     noise_selected = tk.StringVar()
+     noise_combobox = ttk.Combobox(window4, textvariable=noise_selected)
+     noise_combobox["values"] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+     noise_combobox.grid(row=4, column=2)
+     noise_combobox["state"] = "readonly"
+     
+     def new_profile(event):
+          new_profile={}
+          new_profile['action'] = modify_action_combobox.get()
+          new_profile['light'] = light_combobox.get()
+          new_profile['temp'] = temp_combobox.get()
+          new_profile['wind'] = wind_combobox.get()
+          new_profile['noise'] = noise_combobox.get()
+          
+          def update_facts():
+            Profile.updateFacts(prolog, new_profile)
+
+          button_confirm= tk.Button(window4, text="Confirm", bg='#BCA6E8', font=("Microsoft YaHei",12, BOLD), command=update_facts)
+          button_confirm.grid(row=5, column=1)
+          
+     modify_action_combobox.bind("<<ComboboxSelected>>", new_profile)
+     light_combobox.bind("<<ComboboxSelected>>", new_profile)
+     temp_combobox.bind("<<ComboboxSelected>>", new_profile)
+     wind_combobox.bind("<<ComboboxSelected>>", new_profile)
+     noise_combobox.bind("<<ComboboxSelected>>", new_profile)
+     
+     
+
+
+def show_profile():
+     window3 = tk.Tk()
+     window3.title("Profile")
+     window3.geometry("700x1000")
+     window3.resizable(False, False)
+     profile = Profile.getProfile(prolog)
+     label_profile = tk.Label(window3, text=profile, wraplength= 400, font=("Microsoft YaHei",10))
+     label_profile.pack()
+
+     button_modify_profile= tk.Button(window3, text="Modify", bg='#BCA6E8', font=("Microsoft YaHei",12, BOLD), command=modify_profile)
+     button_modify_profile.pack()
+     
+     window3.mainloop()
+
+
+button_simulate = tk.Button(frame1, text="Profile", bg='#BCA6E8', font=("Microsoft YaHei",12, BOLD), command=show_profile)
+button_simulate.place(x=20, y=20)
+
+
 label_welcome = tk.Label(frame1, text="  Welcome in your smart room  ", bg='#BFC0CB', fg='#161EA1', font=("Microsoft YaHei",16, BOLD))
 label_welcome.pack(pady=10, padx=350, ipadx=20, ipady=20)
 
-button_simulate = tk.Button(frame1, text="Simulate sensors", bg='#898FD9', font=("Microsoft YaHei",12, BOLD), command=simulate_sensors)
+button_simulate = tk.Button(frame1, text="Simulate sensors", bg='#BCA6E8', font=("Microsoft YaHei",12, BOLD), command=simulate_sensors)
 button_simulate.pack(padx=10, pady=5)
 
 label_action = tk.Label(frame1, text="Select your action", bg="#BFC0CB", font=("Microsoft YaHei",10))
@@ -76,6 +174,7 @@ Effector.generete_random_effectors(prolog)
 effectors = Effector.getAllEffectors(prolog)
 i=0
 for k, v in effectors.items():
+    k=k.upper()
     label_effector_name = tk.Label(frame4, text=k, font=("Microsoft YaHei",10))
     label_effector_name.grid(row=i, column=0, pady=7, padx=10)
 
@@ -137,7 +236,7 @@ def explanation():
      
      window2.mainloop()
 
-button_explanation = tk.Button(frame4, text="Ask explanation", font=("Microsoft YaHei",12), command=explanation)
+button_explanation = tk.Button(frame4, text="Ask explanation", bg="#BCA6E8", font=("Microsoft YaHei",12, BOLD), command=explanation)
 button_explanation.grid(row = 10, column = 1, padx=10, pady=10)
 
 window.mainloop()

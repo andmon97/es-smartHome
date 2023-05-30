@@ -124,7 +124,7 @@ set(PIId, light) :-
 	setInsideEffectors(Effectors, Y).
 
 setInsideEffectors_temp(X_temp_inside, Y_temp) :-
-    (X_temp_inside < Y_temp ->  setEffectors([r], Y_temp), setEffectors([ar], 0); setEffectors([ac], Y_temp), setEffectors([r], 0) ).
+    (X_temp_inside < Y_temp ->  setEffectors([r], Y_temp), setEffectors([ac], 0); setEffectors([ac], Y_temp), setEffectors([r], 0) ).
 
 
 
