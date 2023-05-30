@@ -1,9 +1,9 @@
-%propertyType(TypeId).
-propertyType(light).
-propertyType(temp).
-propertyType(noise).
-propertyType(wind).
-propertyType(rain).
+%environmentCondition(TypeId).
+environmentCondition(light).
+environmentCondition(temp).
+environmentCondition(noise).
+environmentCondition(wind).
+environmentCondition(rain).
 
 %sensor(SensorId, TypeId).
 :-dynamic(sensor/2).
@@ -75,7 +75,7 @@ effectorValue(r, 0). /* radiator */
 effectorValue(ac, 0). /* air conditioner */
 
 
-%preferencesInstance(actionId, TypeId, ExpectedValueSensor, Effectors).
+%preferencesInstance(PIId, TypeId, ExpectedValueSensor, Effectors).
 :-dynamic(preferencesInstance/4).
 preferencesInstance(nullPreference, _, 0, []).
 preferencesInstance(study, light, 10, [l2, rs1]). /* if study only desk light */

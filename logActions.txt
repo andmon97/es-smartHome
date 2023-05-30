@@ -1,9 +1,9 @@
-setSensorValue(outside_brightness, 2)
+setSensorValue(outside_brightness, 10)
 setSensorValue(inside_brightness, 0)
-setSensorValue(inside_temperature, 24)
-setSensorValue(outside_temperature, 1)
-setSensorValue(outside_noise, 9)
-setSensorValue(outside_wind, 6)
+setSensorValue(inside_temperature, 26)
+setSensorValue(outside_temperature, 26)
+setSensorValue(outside_noise, 5)
+setSensorValue(outside_wind, 3)
 setSensorValue(outside_rain, 1)
 setEffector(rs1,0).
 setEffector(rs2,0).
@@ -13,10 +13,12 @@ setEffector(l3,0).
 setEffector(l4,0).
 setEffector(w1,0).
 setEffector(w2,0).
-setEffector(r,25).
+setEffector(ac,25).
+setEffector(r,0).
 setEffector(w1,0).
 setEffector(w2,0).
-setEffector(r,25).
+setEffector(ac,25).
+setEffector(r,0).
 set(sleep, light).
 set(sleep, temp).
 set(sleep, wind).
