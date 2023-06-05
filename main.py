@@ -67,7 +67,7 @@ frame4.pack(fill=BOTH, expand=True, side=LEFT)
 def modify_profile():
      window4 = tk.Tk()
      window4.title("Modify profile")
-     window4.geometry("500x500")
+     window4.geometry("300x300")
      window4.resizable(False, False)
 
      label_modify_action = tk.Label(window4, text="Select your action", font=("Microsoft YaHei",10, BOLD))
