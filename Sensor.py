@@ -1,5 +1,5 @@
 from pyswip import Prolog
-  
+import datetime 
 
 import random
 
@@ -29,6 +29,8 @@ def setSensorValue(sensorID, value, prolog):
 
 def generete_random_sensors(prolog):
     sensors = getAllSensor(prolog)
+    #import the date
+    date = datetime.datetime.now()
     f = open("logActions.txt", "w")
 
     for k, v in sensors.items():
@@ -40,8 +42,22 @@ def generete_random_sensors(prolog):
                 n = 0
                 setSensorValue(k, n, prolog)
         elif v[0] == 'temp':
-            n = random.randint(1,50)
-            setSensorValue(k, n, prolog)
+            # if is winter
+            if date.month in [12,1,2,3]:
+                n = random.randint(0,10)
+                setSensorValue(k, n, prolog)
+            # if is spring
+            elif date.month in [4,5,6]:
+                n = random.randint(10,20)
+                setSensorValue(k, n, prolog)
+            # if is summer
+            elif date.month in [7,8,9]:
+                n = random.randint(20,30)
+                setSensorValue(k, n, prolog)
+            # if is autumn
+            elif date.month in [10,11]:
+                n = random.randint(10,20)
+                setSensorValue(k, n, prolog)
         elif v[0] == 'noise' or v[0] == 'wind':
             n = random.randint(0,10)
             setSensorValue(k, n, prolog)
